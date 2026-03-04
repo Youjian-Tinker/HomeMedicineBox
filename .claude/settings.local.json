@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "mcp__codex-mcp-server__ping",
+      "mcp__codex-mcp-server__version",
+      "mcp__codex-mcp-server__Help",
+      "Bash(claude mcp:*)",
+      "mcp__codex-mcp-server__ask-codex",
+      "mcp__codex-mcp-server__batch-codex",
+      "Bash(uvx:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(uv pip:*)",
+      "Bash(where uvx:*)",
+      "Bash(\"C:/Users/又见/AppData/Local/Python/pythoncore-3.14-64/Scripts/uvx.exe\" minimax-coding-plan-mcp:*)",
+      "Bash(\"C:/Users/又见/AppData/Local/Python/pythoncore-3.14-64/Scripts/minimax-coding-plan-mcp.exe\":*)",
+      "Bash(MINIMAX_API_KEY=\"sk-cp-auKGEU-fjiw7o4CJgZ2cSh8_HEFhHTWoKMuIqFBfX9lsSCTa8GpMNfFCZPukV-KTaNwN5e0T8HrVrfd7TNUcTJvP_14fRrLmqBedks9KOIlwV8RH3QpS_Is\" \"C:/Users/又见/AppData/Local/Python/pythoncore-3.14-64/Scripts/minimax-coding-plan-mcp.exe\":*)",
+      "Bash(MINIMAX_API_KEY=\"sk-cp-auKGEU-fjiw7o4CJgZ2cSh8_HEFhHTWoKMuIqFBfX9lsSCTa8GpMNfFCZPukV-KTaNwN5e0T8HrVrfd7TNUcTJvP_14fRrLmqBedks9KOIlwV8RH3QpS_Is\" MINIMAX_API_HOST=\"api.minimaxi.com\" \"C:/Users/又见/AppData/Local/Python/pythoncore-3.14-64/Scripts/minimax-coding-plan-mcp.exe\":*)",
+      "Bash(git:*)",
+      "mcp__MiniMax__understand_image"
+    ]
+  }
+}
