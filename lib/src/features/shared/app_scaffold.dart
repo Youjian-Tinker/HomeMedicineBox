@@ -6,18 +6,21 @@ class AppScaffold extends StatelessWidget {
     required this.title,
     required this.currentIndex,
     required this.child,
+    this.floatingActionButton,
     super.key,
   });
 
   final String title;
   final int currentIndex;
   final Widget child;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: SafeArea(child: child),
+      floatingActionButton: floatingActionButton,
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentIndex,
         onDestinationSelected: (index) {

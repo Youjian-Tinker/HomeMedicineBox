@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+@DataClassName('FamilyMemberRow')
 class FamilyMembers extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
@@ -13,6 +14,7 @@ class FamilyMembers extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('MedicineItemRow')
 class MedicineItems extends Table {
   TextColumn get id => text()();
   TextColumn get memberId => text().references(FamilyMembers, #id)();
@@ -30,6 +32,7 @@ class MedicineItems extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('MedicineBatchRow')
 class MedicineBatches extends Table {
   TextColumn get id => text()();
   TextColumn get medicineItemId => text().references(MedicineItems, #id)();
@@ -44,6 +47,7 @@ class MedicineBatches extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('VisitRecordRow')
 class VisitRecords extends Table {
   TextColumn get id => text()();
   TextColumn get memberId => text().references(FamilyMembers, #id)();
@@ -59,6 +63,7 @@ class VisitRecords extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('MedicalDocumentRecordRow')
 class MedicalDocumentRecords extends Table {
   TextColumn get id => text()();
   TextColumn get visitRecordId => text().references(VisitRecords, #id)();
@@ -75,6 +80,7 @@ class MedicalDocumentRecords extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('RecognitionDraftRow')
 class RecognitionDrafts extends Table {
   TextColumn get id => text()();
   TextColumn get draftType => text()();
@@ -91,6 +97,7 @@ class RecognitionDrafts extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('LocalImageAssetRow')
 class LocalImageAssets extends Table {
   TextColumn get id => text()();
   TextColumn get localPath => text()();
