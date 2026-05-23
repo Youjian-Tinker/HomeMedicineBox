@@ -2,7 +2,6 @@
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.metadata
 .packages
 build/
 coverage/
@@ -26,4 +25,3 @@ windows/flutter/
 
 # OS
 .DS_Store
-
