@@ -260,85 +260,6 @@ class HomeRepository {
     });
   }
 
-  Future<void> addManualMedicineDraft(String memberId) async {
-    final now = DateTime.now();
-    await _db.into(_db.recognitionDrafts).insert(
-          RecognitionDraftsCompanion.insert(
-            id: _uuid.v4(),
-            draftType: DraftType.medicine.name,
-            memberId: memberId,
-            status: DraftStatus.needsInput.name,
-            recognizedPayloadJson: encodeMap({
-              'name': '待补充药品',
-              'specification': '请填写规格',
-              'dosageForm': '片剂',
-              'quantity': 1,
-              'unit': '盒',
-              'expiryDate':
-                  now.add(const Duration(days: 180)).toIso8601String(),
-            }),
-            missingFieldsJson: encodeStringList(const ['药品名称', '规格', '有效期']),
-            imageAssetIdsJson: encodeStringList(const []),
-            createdAt: now,
-            updatedAt: now,
-          ),
-        );
-  }
-
-  Future<void> deleteDraft(String id) async {
-    await (_db.delete(_db.recognitionDrafts)
-          ..where((table) => table.id.equals(id)))
-        .go();
-  }
-
-  Future<void> promoteMedicineDraft(RecognitionDraft draft) async {
-    final now = DateTime.now();
-    final medicineId = _uuid.v4();
-    await _db.transaction(() async {
-      await _db.into(_db.medicineItems).insert(
-            MedicineItemsCompanion.insert(
-              id: medicineId,
-              memberId: draft.memberId,
-              name: draft.payload['name']?.toString() ?? '',
-              genericName: const Value(null),
-              specification: draft.payload['specification']?.toString() ?? '',
-              dosageForm: draft.payload['dosageForm']?.toString() ?? '',
-              indication:
-                  Value(_blankToNull(draft.payload['indication']?.toString())),
-              storageNotes: Value(
-                  _blankToNull(draft.payload['storageNotes']?.toString())),
-              source: 'draft',
-              createdAt: now,
-              updatedAt: now,
-            ),
-          );
-      await _db.into(_db.medicineBatches).insert(
-            MedicineBatchesCompanion.insert(
-              id: _uuid.v4(),
-              medicineItemId: medicineId,
-              quantity: _numValue(draft.payload['quantity'], 1),
-              unit: draft.payload['unit']?.toString() ?? '盒',
-              expiryDate: DateTime.tryParse(
-                    draft.payload['expiryDate']?.toString() ?? '',
-                  ) ??
-                  now,
-              lowStockThreshold:
-                  Value(_numValue(draft.payload['lowStockThreshold'], 1)),
-              createdAt: now,
-              updatedAt: now,
-            ),
-          );
-      await (_db.update(_db.recognitionDrafts)
-            ..where((table) => table.id.equals(draft.id)))
-          .write(
-        RecognitionDraftsCompanion(
-          status: Value(DraftStatus.promoted.name),
-          updatedAt: Value(now),
-        ),
-      );
-    });
-  }
-
   FamilyMember _toFamilyMember(FamilyMemberRow row) {
     return FamilyMember(
       id: row.id,
@@ -435,12 +356,5 @@ class HomeRepository {
       return null;
     }
     return trimmed;
-  }
-
-  double _numValue(Object? value, double fallback) {
-    if (value is num) {
-      return value.toDouble();
-    }
-    return double.tryParse(value?.toString() ?? '') ?? fallback;
   }
 }

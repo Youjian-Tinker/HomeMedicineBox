@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/drafts/drafts_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/medicines/medicines_screen.dart';
 import '../features/settings/settings_screen.dart';
@@ -14,7 +13,6 @@ final appRouter = GoRouter(
     GoRoute(path: '/', builder: (_, __) => const HomeScreen()),
     GoRoute(path: '/medicines', builder: (_, __) => const MedicinesScreen()),
     GoRoute(path: '/visits', builder: (_, __) => const VisitsScreen()),
-    GoRoute(path: '/drafts', builder: (_, __) => const DraftsScreen()),
     GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
   ],
 );

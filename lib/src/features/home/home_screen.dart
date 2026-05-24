@@ -43,12 +43,6 @@ class HomeScreen extends ConsumerWidget {
     final visibleVisits = state.visits
         .where((visit) => visit.memberId == selectedMember.id)
         .toList();
-    final activeDrafts = state.drafts
-        .where((draft) =>
-            draft.status != DraftStatus.promoted &&
-            draft.status != DraftStatus.abandoned &&
-            draft.memberId == selectedMember.id)
-        .toList();
     final engine = ref.watch(reminderEngineProvider);
     final reminders = visibleBatches
         .map((batch) => engine.statusFor(batch, DateTime.now()))
@@ -123,7 +117,6 @@ class HomeScreen extends ConsumerWidget {
                           status == MedicineStatus.usedUp)
                       .length,
                 ),
-                _StatChip(label: '待确认草稿', value: activeDrafts.length),
               ],
             ),
           ),
@@ -188,15 +181,6 @@ class HomeScreen extends ConsumerWidget {
                         ),
                     ],
                   ),
-          ),
-          const SizedBox(height: 16),
-          SectionCard(
-            title: '待确认草稿',
-            trailing: TextButton(
-              onPressed: () => context.go('/drafts'),
-              child: Text('${activeDrafts.length} 条'),
-            ),
-            child: const Text('草稿确认前不会进入正式记录和提醒计算。'),
           ),
         ],
       ),

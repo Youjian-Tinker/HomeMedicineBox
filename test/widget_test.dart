@@ -21,5 +21,6 @@ void main() {
     expect(find.text('HomeMedicineBox'), findsOneWidget);
     expect(find.text('今日提醒'), findsOneWidget);
     expect(find.text('新增药品'), findsOneWidget);
+    expect(find.text('草稿'), findsNothing);
   });
 }

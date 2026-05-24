@@ -10,7 +10,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
       title: '设置',
-      currentIndex: 4,
+      currentIndex: 3,
       child: ListView(
         padding: const EdgeInsets.all(16),
         children: const [

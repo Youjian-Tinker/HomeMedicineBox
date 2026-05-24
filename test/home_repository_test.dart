@@ -114,15 +114,4 @@ void main() {
     expect(next.documents.single.summary, '血常规正常');
     expect(next.visits.single.documentIds, [next.documents.single.id]);
   });
-
-  test('unconfirmed draft does not enter formal medicine lists', () async {
-    final state = await repository.loadState();
-
-    await repository.addManualMedicineDraft(state.selectedMemberId);
-
-    final next = await repository.loadState();
-    expect(next.drafts, hasLength(1));
-    expect(next.medicines, isEmpty);
-    expect(next.batches, isEmpty);
-  });
 }

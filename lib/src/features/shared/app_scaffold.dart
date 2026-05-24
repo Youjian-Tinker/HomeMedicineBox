@@ -32,8 +32,6 @@ class AppScaffold extends StatelessWidget {
             case 2:
               context.go('/visits');
             case 3:
-              context.go('/drafts');
-            case 4:
               context.go('/settings');
           }
         },
@@ -42,8 +40,6 @@ class AppScaffold extends StatelessWidget {
           NavigationDestination(
               icon: Icon(Icons.medication_outlined), label: '药品'),
           NavigationDestination(icon: Icon(Icons.folder_outlined), label: '就诊'),
-          NavigationDestination(
-              icon: Icon(Icons.edit_note_outlined), label: '草稿'),
           NavigationDestination(
               icon: Icon(Icons.settings_outlined), label: '设置'),
         ],

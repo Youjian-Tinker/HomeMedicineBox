@@ -2,13 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/local/app_database.dart';
 import '../data/local/home_repository.dart';
-import '../domain/draft_service.dart';
 import '../domain/image_cleanup.dart';
 import '../domain/models.dart';
 import '../domain/reminder_engine.dart';
 
 final reminderEngineProvider = Provider((_) => const ReminderEngine());
-final draftServiceProvider = Provider((_) => const DraftService());
 final imageCleanupServiceProvider =
     Provider((_) => const ImageCleanupService());
 
@@ -72,22 +70,6 @@ class HomeStateController extends StateNotifier<HomeMedicineState> {
 
   Future<void> deleteVisit(String visitId) async {
     await _repository.deleteVisit(visitId);
-    await reload();
-  }
-
-  Future<void> addManualMedicineDraft() async {
-    await _repository.addManualMedicineDraft(state.selectedMemberId);
-    await reload();
-  }
-
-  Future<void> promoteDraft(String draftId) async {
-    final draft = state.drafts.firstWhere((item) => item.id == draftId);
-    await _repository.promoteMedicineDraft(draft);
-    await reload();
-  }
-
-  Future<void> deleteDraft(String draftId) async {
-    await _repository.deleteDraft(draftId);
     await reload();
   }
 }
