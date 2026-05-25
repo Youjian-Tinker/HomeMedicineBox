@@ -101,16 +101,16 @@ void main() {
       VisitEntry(
         memberId: state.selectedMemberId,
         visitDate: DateTime(2026, 5, 23),
-        hospitalName: '社区医院',
-        department: '全科',
         diagnosisSummary: '复诊',
-        doctorName: '李医生',
         documentSummary: '血常规正常',
       ),
     );
 
     final next = await repository.loadState();
     expect(next.visits.single.diagnosisSummary, '复诊');
+    expect(next.visits.single.hospitalName, isNull);
+    expect(next.visits.single.department, isNull);
+    expect(next.visits.single.doctorName, isNull);
     expect(next.documents.single.summary, '血常规正常');
     expect(next.visits.single.documentIds, [next.documents.single.id]);
   });

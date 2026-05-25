@@ -40,9 +40,7 @@ class VisitsScreen extends ConsumerWidget {
                   child: ListTile(
                     leading: const Icon(Icons.local_hospital_outlined),
                     title: Text(visit.diagnosisSummary),
-                    subtitle: Text(
-                      '${format.format(visit.visitDate)} · ${visit.hospitalName ?? '未填写医院'}',
-                    ),
+                    subtitle: Text(_visitSubtitle(visit, format)),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => _showVisitDetail(context, ref, visit.id),
                   ),
@@ -61,10 +59,7 @@ Future<void> _showVisitForm(
   final formKey = GlobalKey<FormState>();
   var memberId = state.selectedMemberId;
   var visitDate = DateTime.now();
-  final hospitalName = TextEditingController();
-  final department = TextEditingController();
   final diagnosisSummary = TextEditingController();
-  final doctorName = TextEditingController();
   final documentSummary = TextEditingController();
 
   await showDialog<void>(
@@ -111,24 +106,12 @@ Future<void> _showVisitForm(
                       },
                     ),
                     TextFormField(
-                      controller: hospitalName,
-                      decoration: const InputDecoration(labelText: '医院名称'),
-                    ),
-                    TextFormField(
-                      controller: department,
-                      decoration: const InputDecoration(labelText: '科室'),
-                    ),
-                    TextFormField(
                       controller: diagnosisSummary,
-                      decoration: const InputDecoration(labelText: '诊断结果摘要'),
+                      decoration: const InputDecoration(labelText: '诊断/问题摘要'),
                       validator: (value) =>
                           value == null || value.trim().isEmpty
-                              ? '请填写诊断结果摘要'
+                              ? '请填写诊断/问题摘要'
                               : null,
-                    ),
-                    TextFormField(
-                      controller: doctorName,
-                      decoration: const InputDecoration(labelText: '医生姓名'),
                     ),
                     TextFormField(
                       controller: documentSummary,
@@ -153,10 +136,7 @@ Future<void> _showVisitForm(
                         VisitEntry(
                           memberId: memberId,
                           visitDate: visitDate,
-                          hospitalName: hospitalName.text,
-                          department: department.text,
                           diagnosisSummary: diagnosisSummary.text.trim(),
-                          doctorName: doctorName.text,
                           documentSummary: documentSummary.text,
                         ),
                       );
@@ -201,7 +181,7 @@ Future<void> _showVisitDetail(
                   style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 8),
               Text(DateFormat('yyyy-MM-dd').format(visit.visitDate)),
-              Text(visit.hospitalName ?? '未填写医院'),
+              if (visit.hospitalName != null) Text('医院：${visit.hospitalName}'),
               if (visit.department != null) Text('科室：${visit.department}'),
               if (visit.doctorName != null) Text('医生：${visit.doctorName}'),
               const Divider(height: 32),
@@ -252,4 +232,15 @@ Future<void> _confirmDeleteVisit(
       Navigator.of(context).pop();
     }
   }
+}
+
+String _visitSubtitle(VisitRecord visit, DateFormat format) {
+  final recognizedParts = [
+    visit.hospitalName,
+    visit.department,
+  ].whereType<String>().where((value) => value.trim().isNotEmpty).toList();
+  if (recognizedParts.isEmpty) {
+    return format.format(visit.visitDate);
+  }
+  return '${format.format(visit.visitDate)} · ${recognizedParts.join(' · ')}';
 }

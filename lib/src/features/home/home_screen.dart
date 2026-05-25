@@ -177,7 +177,9 @@ class HomeScreen extends ConsumerWidget {
                         ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Text(visit.diagnosisSummary),
-                          subtitle: Text(visit.hospitalName ?? '未填写医院'),
+                          subtitle: Text(
+                            '${visit.visitDate.year}-${visit.visitDate.month.toString().padLeft(2, '0')}-${visit.visitDate.day.toString().padLeft(2, '0')}',
+                          ),
                         ),
                     ],
                   ),
